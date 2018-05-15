@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Currency : Codable, Equatable {
+class Currency: Codable, Equatable {
     
     let shortName: String
     let fullName: String
@@ -33,7 +33,6 @@ class Currency : Codable, Equatable {
     }
     
     static func == (lhs: Currency, rhs: Currency) -> Bool {
-
         if lhs.fullName == rhs.fullName, lhs.shortName == rhs.shortName, lhs.ratio == rhs.ratio, lhs.index == rhs.index {
             return true
         }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class AboutConfigurator {
+class AboutConfigurator: AboutConfiguratorProtocol {
     
     func configure(with viewController: AboutViewController) {
         let presenter = AboutPresenter(view: viewController)
@@ -20,5 +20,4 @@ class AboutConfigurator {
         presenter.interactor = interactor
         presenter.router = router
     }
-    
 }

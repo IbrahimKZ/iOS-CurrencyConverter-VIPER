@@ -65,3 +65,7 @@ protocol MainRouterProtocol: class {
     func showAboutScene()
     func prepare(for segue: UIStoryboardSegue, sender: Any?)
 }
+
+protocol MainConfiguratorProtocol: class {
+    func configure(with viewController: MainViewController)
+}

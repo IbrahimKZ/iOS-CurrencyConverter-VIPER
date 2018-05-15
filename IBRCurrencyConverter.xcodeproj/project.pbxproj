@@ -157,13 +157,13 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		A009EE7B20879A0B00A0CE67 /* Scenes */ = {
+		A009EE7B20879A0B00A0CE67 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				A009EE822087AECB00A0CE67 /* Main */,
 				A0100DCA20A0565B00A6F932 /* About */,
 			);
-			path = Scenes;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		A009EE822087AECB00A0CE67 /* Main */ = {
@@ -259,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				A0C4297920877C1200C1A2A7 /* AppDelegate.swift */,
-				A009EE7B20879A0B00A0CE67 /* Scenes */,
+				A009EE7B20879A0B00A0CE67 /* Modules */,
 				A083B5E2209CA8D80055CC04 /* Entities */,
 				A009EE872087B16C00A0CE67 /* Services */,
 				A083B5E3209CD20D0055CC04 /* Views */,

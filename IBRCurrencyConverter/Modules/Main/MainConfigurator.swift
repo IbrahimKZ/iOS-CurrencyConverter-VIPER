@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MainConfigurator {
+class MainConfigurator: MainConfiguratorProtocol {
     
     func configure(with viewController: MainViewController) {
         let presenter = MainPresenter(view: viewController)

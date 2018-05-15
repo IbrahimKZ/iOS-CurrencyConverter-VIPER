@@ -22,7 +22,7 @@ class MainViewController: UIViewController, MainViewProtocol, UITextFieldDelegat
     @IBOutlet weak var rateLabel: UILabel!
     
     var presenter: MainPresenterProtocol!
-    var configurator = MainConfigurator()
+    var configurator: MainConfiguratorProtocol = MainConfigurator()
     
     let selfToAboutSegueName = "MainToAboutSegue"
     
@@ -75,7 +75,6 @@ class MainViewController: UIViewController, MainViewProtocol, UITextFieldDelegat
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        
         if textField == inputTextField {
             textField.clear()
             self.presenter.inputValueCleared()
@@ -126,7 +125,6 @@ class MainViewController: UIViewController, MainViewProtocol, UITextFieldDelegat
     }
     
     func showLoadCurrenciesButton() {
-        
         DispatchQueue.main.async {
             self.view.bringSubview(toFront: self.HUDView)
             self.activityIndicatorView.alpha = 0
@@ -147,7 +145,6 @@ class MainViewController: UIViewController, MainViewProtocol, UITextFieldDelegat
     
     func showAlertView(with text: String) {
         DispatchQueue.main.async {
-            
             let alertController = UIAlertController(title: "", message: text, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
                 

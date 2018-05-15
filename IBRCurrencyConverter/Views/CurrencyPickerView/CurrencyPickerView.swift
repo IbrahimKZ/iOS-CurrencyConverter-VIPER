@@ -21,7 +21,6 @@ protocol CurrencyPickerViewDelegate {
 }
 
 class CurrencyPickerView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, CurrencyPickerViewProtocol {
-    
     @IBOutlet var view: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var titleLabel: UILabel!

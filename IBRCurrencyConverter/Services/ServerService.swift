@@ -9,9 +9,20 @@
 import Foundation
 import UIKit // for UIApplication
 
-class ServerService {
+protocol ServerServiceProtocol: class {
+    var urlRatesSource: String { get }
+    func openUrl(with urlString: String)
+    func getAllCurrencies(completion: @escaping ([String: Any]?, Error?) -> Swift.Void)
+    func getRatio(inputCurrencyShortName: String, outputCurrencyShortName: String, completion: @escaping ([String: Any]?, Error?) -> Swift.Void)
+}
+
+class ServerService: ServerServiceProtocol {
     
-    let urlRatesSource = "https://free.currencyconverterapi.com"
+    // MARK: - ServerServiceProtocol methods
+    
+    var urlRatesSource: String {
+        return "https://free.currencyconverterapi.com"
+    }
     
     func openUrl(with urlString: String) {
         if let url = URL(string: urlString) {
@@ -20,14 +31,12 @@ class ServerService {
     }
     
     func getAllCurrencies(completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
-        
         if let URL = URL(string: URLAllCurrencies) {
             getJSON(URL: URL, completion: completion)
         }
     }
     
     func getRatio(inputCurrencyShortName: String, outputCurrencyShortName: String, completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
-        
         let URLString = URLGetRatio(inputCurrencyShortName: inputCurrencyShortName, outputCurrencyShortName: outputCurrencyShortName)
         
         if let URL = URL(string: URLString) {
@@ -38,7 +47,6 @@ class ServerService {
     // MARK: - Private methods
         
     private func getJSON(URL: URL, completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
-        
         let sharedSession = URLSession.shared
         
         let dataTask = sharedSession.dataTask(with: URL, completionHandler: { (data, response, error) -> Void in
@@ -72,5 +80,4 @@ class ServerService {
     private func URLGetRatio(inputCurrencyShortName: String, outputCurrencyShortName: String) -> String {
         return "https://free.currencyconverterapi.com/api/v5/convert?q=\(inputCurrencyShortName)_\(outputCurrencyShortName)&compact=y"
     }
-    
 }

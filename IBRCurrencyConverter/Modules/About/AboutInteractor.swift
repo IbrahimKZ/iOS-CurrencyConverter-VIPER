@@ -11,8 +11,7 @@ import Foundation
 class AboutInteractor: AboutInteractorProtocol {
     
     weak var presenter: AboutPresenterProtocol!
-    
-    let serverService = ServerService()
+    let serverService: ServerServiceProtocol = ServerService()
     
     required init(presenter: AboutPresenterProtocol) {
         self.presenter = presenter

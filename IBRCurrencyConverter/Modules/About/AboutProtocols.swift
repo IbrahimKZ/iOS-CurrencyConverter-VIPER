@@ -25,5 +25,9 @@ protocol AboutInteractorProtocol: class {
 }
 
 protocol AboutRouterProtocol: class {
-    func closeCurrenctViewController()
+    func closeCurrentViewController()
+}
+
+protocol AboutConfiguratorProtocol: class {
+    func configure(with viewController: AboutViewController)
 }

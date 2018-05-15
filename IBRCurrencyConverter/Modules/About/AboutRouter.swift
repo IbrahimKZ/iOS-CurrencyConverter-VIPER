@@ -17,7 +17,7 @@ class AboutRouter: AboutRouterProtocol {
         self.viewController = viewController
     }
     
-    func closeCurrenctViewController() {
+    func closeCurrentViewController() {
         viewController.dismiss(animated: true, completion: nil)
     }
 }

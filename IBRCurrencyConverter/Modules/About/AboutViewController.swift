@@ -13,7 +13,7 @@ class AboutViewController: UIViewController, AboutViewProtocol {
     @IBOutlet weak var urlButton: UIButton!
     
     var presenter: AboutPresenterProtocol!
-    var configurator = AboutConfigurator()
+    let configurator: AboutConfiguratorProtocol = AboutConfigurator()
 
     // MARK: - Lifecycle methods
     

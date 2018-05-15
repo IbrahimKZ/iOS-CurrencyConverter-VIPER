@@ -15,14 +15,25 @@ struct CurrencyError : Error {
     }
 }
 
-class CurrencyService {
+protocol CurrencyServiceProtocol: class {
+    var currencies: [Currency] { set get }
+    var currencyNames: [String] { set get }
+    var inputValue: Double { set get }
+    var outputValue: Double { get }
+    var inputCurrency: Currency { set get }
+    var outputCurrency: Currency { set get }
+    func saveAllCurrencies(with dict: [String: Any], completion: @escaping (CurrencyError?) -> Swift.Void)
+    func sortAndUpdateCurrentCurrencies()
+    func saveOutputCurrencyRatio(with dict: [String: Any], completion: @escaping (CurrencyError?) -> Swift.Void)
+}
+
+class CurrencyService: CurrencyServiceProtocol {
     
-    let storageService = StorageService()
+    private let storageService: StorageServiceProtocol = StorageService()
     var currencies = [Currency]()
     var currencyNames = [String]()
     
     init() {
-        
         inputValue = storageService.savedInputValue() ?? 100
         inputCurrency = storageService.savedInputCurrency() ?? Currency.defaultCurrency1()
         outputCurrency = storageService.savedOutputCurrency() ?? Currency.defaultCurrency2()
@@ -42,9 +53,22 @@ class CurrencyService {
             return value
         }
     }
+    var inputCurrency: Currency {
+        didSet {
+            if (oldValue != inputCurrency) {
+                storageService.saveInputCurrency(with: inputCurrency)
+            }
+        }
+    }
+    var outputCurrency: Currency {
+        didSet {
+            if (oldValue != outputCurrency) {
+                storageService.saveOutputCurrency(with: outputCurrency)
+            }
+        }
+    }
     
     func saveAllCurrencies(with dict: [String: Any], completion: @escaping (CurrencyError?) -> Swift.Void) {
-        
         currencies = [Currency]()
         currencyNames = [String]()
         
@@ -66,7 +90,6 @@ class CurrencyService {
     }
     
     func sortAndUpdateCurrentCurrencies() {
-        
         if currencies.count > 0 {
             currencies.sort {
                 $0.shortName < $1.shortName
@@ -103,7 +126,6 @@ class CurrencyService {
     }
     
     func saveOutputCurrencyRatio(with dict: [String: Any], completion: @escaping (CurrencyError?) -> Swift.Void) {
-        
         let key = "\(inputCurrency.shortName)_\(outputCurrency.shortName)"
         
         if let dictValue = dict[key] as! [String: Double]? {
@@ -119,20 +141,4 @@ class CurrencyService {
         }
         completion(CurrencyError(description: "Error in saving ratio for currency"))
     }
-    
-    var inputCurrency: Currency {
-        didSet {
-            if (oldValue != inputCurrency) {
-                storageService.saveInputCurrency(with: inputCurrency)
-            }
-        }
-    }
-    
-    var outputCurrency: Currency {
-        didSet {
-            if (oldValue != outputCurrency) {
-                storageService.saveOutputCurrency(with: outputCurrency)
-            }
-        }
-    }    
 }

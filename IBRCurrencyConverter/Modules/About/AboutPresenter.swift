@@ -25,7 +25,7 @@ class AboutPresenter: AboutPresenterProtocol {
     }
     
     func closeButtonClicked() {
-        router.closeCurrenctViewController()
+        router.closeCurrentViewController()
     }
     
     func urlButtonClicked(with urlString: String?) {

@@ -17,8 +17,8 @@ class MainInteractor: MainInteractorProtocol {
     
     weak var presenter: MainPresenterProtocol!
     
-    let currencyService = CurrencyService()
-    let serverService = ServerService()
+    let currencyService: CurrencyServiceProtocol = CurrencyService()
+    let serverService: ServerServiceProtocol = ServerService()
     
     var currencyChangingMode: CurrencyChangingMode?
     
@@ -123,7 +123,6 @@ class MainInteractor: MainInteractorProtocol {
             }
             
             if let dictResponse = dict {
-                
                 if let mode = self.currencyChangingMode, let newCurrency = newCurrency {
                     switch mode {
                     case .inputCurrencyChanging:
