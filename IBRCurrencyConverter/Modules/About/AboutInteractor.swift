@@ -19,7 +19,7 @@ class AboutInteractor: AboutInteractorProtocol {
     
     var urlRatesSource: String {
         get {
-            return serverService.urlRatesSource
+            return "https://free.currencyconverterapi.com"
         }
     }
     

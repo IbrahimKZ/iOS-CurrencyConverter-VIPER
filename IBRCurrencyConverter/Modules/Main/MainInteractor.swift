@@ -18,7 +18,6 @@ class MainInteractor: MainInteractorProtocol {
     weak var presenter: MainPresenterProtocol!
     
     let currencyService: CurrencyServiceProtocol = CurrencyService()
-    let serverService: ServerServiceProtocol = ServerService()
     
     var currencyChangingMode: CurrencyChangingMode?
     
@@ -66,42 +65,31 @@ class MainInteractor: MainInteractorProtocol {
     
     var outputCurrencyRatio: Double {
         get {
-            return currencyService.outputCurrency.ratio
+            return currencyService.outputRatio
         }
     }
     
     func getAllCurrencies() {
         presenter.showHUD()
-        serverService.getAllCurrencies { (dict, error) in
+        currencyService.getAllCurrencies { (result: Result<[Currency]>) in
+            self.presenter.hideHUD()
             
-            if let error = error {
-                self.presenter.hideHUD()
+            switch result {
+            case .success(_):
+                self.getOutputCurrencyRatio(newCurrency: nil)
+            case .failure(let error):
                 self.presenter.showLoadCurrenciesButton()
                 self.presenter.showAlertView(with: error.localizedDescription)
-                return
-            }
-            
-            if let dictResponse = dict {
-                self.currencyService.saveAllCurrencies(with: dictResponse, completion: { (error) in
-                    
-                    if let error = error {
-                        self.presenter.hideHUD()
-                        self.presenter.showAlertView(with: error.localizedDesc)
-                        return
-                    }
-                    self.currencyService.sortAndUpdateCurrentCurrencies()
-                    self.getOutputCurrencyRatio(newCurrency: nil)
-                })
             }
         }
     }
     
     func getOutputCurrencyRatio(newCurrency: Currency?) {
         presenter.showHUD()
-        
+
         var requestInputCurrencyShortName = inputCurrencyShortName
         var requestOutputCurrencyShortName = outputCurrencyShortName
-        
+
         if let mode = self.currencyChangingMode, let newCurrency = newCurrency {
             switch mode {
             case .inputCurrencyChanging:
@@ -111,38 +99,30 @@ class MainInteractor: MainInteractorProtocol {
             }
         }
         
-        serverService.getRatio(inputCurrencyShortName: requestInputCurrencyShortName, outputCurrencyShortName: requestOutputCurrencyShortName) { (dict, error) in
-            
+        currencyService.getRatio(inputCurrencyShortName: requestInputCurrencyShortName, outputCurrencyShortName: requestOutputCurrencyShortName) { (result: Result<CurrencyRatio>) in
             self.presenter.hideHUD()
             
-            if error != nil {
-                if let errorText = error?.localizedDescription {
-                    self.presenter.showAlertView(with: errorText)
-                }
-                return
+            switch result {
+            case .success(_):
+                self.updateCurrencies(newCurrency: newCurrency)
+                self.presenter.updateOutputValue()
+                self.presenter.updateRateText()
+            case .failure(let error):
+                self.presenter.showAlertView(with: error.localizedDescription)
             }
-            
-            if let dictResponse = dict {
-                if let mode = self.currencyChangingMode, let newCurrency = newCurrency {
-                    switch mode {
-                    case .inputCurrencyChanging:
-                        self.currencyService.inputCurrency = newCurrency
-                        self.presenter.inputCurrencyNameUpdated()
-                    case .outputCurrencyChanging:
-                        self.currencyService.outputCurrency = newCurrency
-                        self.presenter.outputCurrencyNameUpdated()
-                    }
-                }
-                
-                self.currencyService.saveOutputCurrencyRatio(with: dictResponse, completion: { (error) in
-                    
-                    if let error = error {
-                        self.presenter.showAlertView(with: error.localizedDesc)
-                        return
-                    }
-                    self.presenter.updateOutputValue()
-                    self.presenter.updateRateText()
-                })
+        }
+    }
+    
+    private func updateCurrencies(newCurrency: Currency?) {
+        
+        if let mode = self.currencyChangingMode, let newCurrency = newCurrency {
+            switch mode {
+            case .inputCurrencyChanging:
+                self.currencyService.inputCurrency = newCurrency
+                self.presenter.inputCurrencyNameUpdated()
+            case .outputCurrencyChanging:
+                self.currencyService.outputCurrency = newCurrency
+                self.presenter.outputCurrencyNameUpdated()
             }
         }
     }

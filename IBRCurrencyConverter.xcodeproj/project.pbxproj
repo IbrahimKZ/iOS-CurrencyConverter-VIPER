@@ -70,6 +70,9 @@
 		A0C4298420877C1A00C1A2A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C4298220877C1A00C1A2A7 /* LaunchScreen.storyboard */; };
 		A0C4298F20877C1A00C1A2A7 /* IBRCurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C4298E20877C1A00C1A2A7 /* IBRCurrencyConverterTests.swift */; };
 		A0C4299A20877C1A00C1A2A7 /* IBRCurrencyConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C4299920877C1A00C1A2A7 /* IBRCurrencyConverterUITests.swift */; };
+		A42BC6CE20DACC3400F88743 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42BC6CD20DACC3400F88743 /* Result.swift */; };
+		A42BC6CF20DACF6700F88743 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42BC6CD20DACC3400F88743 /* Result.swift */; };
+		A42BC6D020DACF6700F88743 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42BC6CD20DACC3400F88743 /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +124,7 @@
 		A0C4299520877C1A00C1A2A7 /* IBRCurrencyConverterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IBRCurrencyConverterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C4299920877C1A00C1A2A7 /* IBRCurrencyConverterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBRCurrencyConverterUITests.swift; sourceTree = "<group>"; };
 		A0C4299B20877C1B00C1A2A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A42BC6CD20DACC3400F88743 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,7 @@
 				A05386CF2098CAFC0059B302 /* CurrencyService.swift */,
 				A022770A2099B46600788C3D /* ServerService.swift */,
 				A0227712209A2A3B00788C3D /* StorageService.swift */,
+				A42BC6CD20DACC3400F88743 /* Result.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 				A0100DD020A056A700A6F932 /* AboutPresenter.swift in Sources */,
 				A009EE772087994600A0CE67 /* MainViewController.swift in Sources */,
 				A0100DD820A056C700A6F932 /* AboutConfigurator.swift in Sources */,
+				A42BC6CE20DACC3400F88743 /* Result.swift in Sources */,
 				A0C4297A20877C1200C1A2A7 /* AppDelegate.swift in Sources */,
 				A0100DD420A056B700A6F932 /* AboutInteractor.swift in Sources */,
 				A05386CC2098C6A90059B302 /* MainInteractor.swift in Sources */,
@@ -455,6 +461,7 @@
 				A0100DD120A056A700A6F932 /* AboutPresenter.swift in Sources */,
 				A0C4298F20877C1A00C1A2A7 /* IBRCurrencyConverterTests.swift in Sources */,
 				A0100DD920A056C700A6F932 /* AboutConfigurator.swift in Sources */,
+				A42BC6CF20DACF6700F88743 /* Result.swift in Sources */,
 				A009EE782087994600A0CE67 /* MainViewController.swift in Sources */,
 				A0100DD520A056B700A6F932 /* AboutInteractor.swift in Sources */,
 				A05386CD2098C6A90059B302 /* MainInteractor.swift in Sources */,
@@ -481,6 +488,7 @@
 				A0100DD220A056A700A6F932 /* AboutPresenter.swift in Sources */,
 				A0C4299A20877C1A00C1A2A7 /* IBRCurrencyConverterUITests.swift in Sources */,
 				A0100DDA20A056C700A6F932 /* AboutConfigurator.swift in Sources */,
+				A42BC6D020DACF6700F88743 /* Result.swift in Sources */,
 				A009EE792087994600A0CE67 /* MainViewController.swift in Sources */,
 				A0100DD620A056B700A6F932 /* AboutInteractor.swift in Sources */,
 				A05386CE2098C6A90059B302 /* MainInteractor.swift in Sources */,
