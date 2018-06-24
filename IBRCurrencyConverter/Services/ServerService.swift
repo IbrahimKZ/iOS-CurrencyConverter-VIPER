@@ -9,20 +9,16 @@
 import Foundation
 import UIKit // for UIApplication
 
+//TODO: Подобие сетевого слоя
 protocol ServerServiceProtocol: class {
-    var urlRatesSource: String { get }
+    //TODO: Это где то в презентере должно быть
     func openUrl(with urlString: String)
-    func getAllCurrencies(completion: @escaping ([String: Any]?, Error?) -> Swift.Void)
-    func getRatio(inputCurrencyShortName: String, outputCurrencyShortName: String, completion: @escaping ([String: Any]?, Error?) -> Swift.Void)
+    func getJSON<T: Decodable>(URL: URL, completion: @escaping (Result<T>) -> Void)
 }
 
 class ServerService: ServerServiceProtocol {
-    
+ 
     // MARK: - ServerServiceProtocol methods
-    
-    var urlRatesSource: String {
-        return "https://free.currencyconverterapi.com"
-    }
     
     func openUrl(with urlString: String) {
         if let url = URL(string: urlString) {
@@ -30,54 +26,28 @@ class ServerService: ServerServiceProtocol {
         }
     }
     
-    func getAllCurrencies(completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
-        if let URL = URL(string: URLAllCurrencies) {
-            getJSON(URL: URL, completion: completion)
-        }
-    }
-    
-    func getRatio(inputCurrencyShortName: String, outputCurrencyShortName: String, completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
-        let URLString = URLGetRatio(inputCurrencyShortName: inputCurrencyShortName, outputCurrencyShortName: outputCurrencyShortName)
-        
-        if let URL = URL(string: URLString) {
-            getJSON(URL: URL, completion: completion)
-        }
-    }
-    
     // MARK: - Private methods
         
-    private func getJSON(URL: URL, completion: @escaping ([String: Any]?, Error?) -> Swift.Void) {
+    func getJSON<T: Decodable>(URL: URL, completion: @escaping (Result<T>) -> Void) {
         let sharedSession = URLSession.shared
         
         let dataTask = sharedSession.dataTask(with: URL, completionHandler: { (data, response, error) -> Void in
-            
-            if error != nil {
-                print("Error to load: \(String(describing: error?.localizedDescription))")
-                completion(nil, error)
+            if let error = error {
+                print("Error to load: \(String(describing: error.localizedDescription))")
+                completion(Result.failure(error))
                 return
             }
             
             if let dataResponse = data {
                 do {
-                    let json = try JSONSerialization.jsonObject(with: dataResponse, options: []) as! [String: AnyObject]
-                    
-                    print("json: \(json), error: \(String(describing: error))")
-                    completion(json, nil)
-                    return
-                    
-                } catch let error as NSError {
-                    
+                    let decoded = try JSONDecoder().decode(T.self, from: dataResponse)
+                    completion(.success(decoded))
+                } catch {
                     print("Failed to load: \(error.localizedDescription)")
-                    completion(nil, error)
+                    completion(.failure(error))
                 }
             }
         })
         dataTask.resume()
-    }
-    
-    private let URLAllCurrencies = "https://free.currencyconverterapi.com/api/v5/currencies"
-    
-    private func URLGetRatio(inputCurrencyShortName: String, outputCurrencyShortName: String) -> String {
-        return "https://free.currencyconverterapi.com/api/v5/convert?q=\(inputCurrencyShortName)_\(outputCurrencyShortName)&compact=y"
     }
 }
